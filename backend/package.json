@@ -1,17 +1,18 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "Api for lagerland",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node index.js",
-    "debug": "nodemon --inspect index.js"
-  },
-  "author": "Tobias Steffensen",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1"
-  }
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "Api for lagerland",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "node src/index.js",
+        "debug": "nodemon --inspect src/index.js"
+    },
+    "author": "Tobias Steffensen",
+    "license": "ISC",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "mariadb": "^2.5.4"
+    }
 }
