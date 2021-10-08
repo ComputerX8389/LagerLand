@@ -4,7 +4,7 @@ const consts = require('./consts.js');
 
 // Create a connection pool
 var pool = mariadb.createPool({
-    host: 'localhost',
+    host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: consts.DB_NAME,

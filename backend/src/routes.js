@@ -1,5 +1,6 @@
 const Itemcontroller = require('./controllers/itemcontroller');
 const Categorycontroller = require('./controllers/categorycontroller');
+const Usercontroller = require('./controllers/usercontroller');
 const router = require('express').Router();
 
 module.exports = (app) => {
@@ -10,6 +11,9 @@ module.exports = (app) => {
     // Categories
     router.get('/Categories', Categorycontroller.get);
     router.post('/Categories', Categorycontroller.post);
+
+    // Users
+    router.post('/auth', Usercontroller.auth);
 
     app.use('/', router);
 };
