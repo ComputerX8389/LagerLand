@@ -1,6 +1,7 @@
 const Itemcontroller = require('./controllers/itemcontroller');
 const Categorycontroller = require('./controllers/categorycontroller');
 const Usercontroller = require('./controllers/usercontroller');
+const Scancontroller = require('./controllers/scancontroller');
 const router = require('express').Router();
 
 module.exports = (app) => {
@@ -11,6 +12,9 @@ module.exports = (app) => {
     // Categories
     router.get('/Categories', Categorycontroller.get);
     router.post('/Categories', Categorycontroller.post);
+
+    // Scans
+    router.post('/Scans', Scancontroller.post);
 
     // Users
     router.post('/auth', Usercontroller.auth);
