@@ -17,7 +17,8 @@ module.exports = (app) => {
     router.post('/Scans', Scancontroller.post);
 
     // Users
-    router.post('/auth', Usercontroller.auth);
+    router.post('/Auth', Usercontroller.auth);
+    router.post('/Register', Usercontroller.register);
 
     app.use('/', router);
 };
