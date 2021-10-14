@@ -2,19 +2,20 @@ const Itemcontroller = require('./controllers/itemcontroller');
 const Categorycontroller = require('./controllers/categorycontroller');
 const Usercontroller = require('./controllers/usercontroller');
 const Scancontroller = require('./controllers/scancontroller');
+const auth = require('./middleware/auth');
 const router = require('express').Router();
 
 module.exports = (app) => {
     // Items
-    router.get('/Items', Itemcontroller.get);
-    router.post('/Items', Itemcontroller.post);
+    router.get('/Items', auth, Itemcontroller.get);
+    router.post('/Items', auth, Itemcontroller.post);
 
     // Categories
-    router.get('/Categories', Categorycontroller.get);
-    router.post('/Categories', Categorycontroller.post);
+    router.get('/Categories', auth, Categorycontroller.get);
+    router.post('/Categories', auth, Categorycontroller.post);
 
     // Scans
-    router.post('/Scans', Scancontroller.post);
+    router.post('/Scans', auth, Scancontroller.post);
 
     // Users
     router.post('/Auth', Usercontroller.auth);

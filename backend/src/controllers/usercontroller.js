@@ -1,5 +1,6 @@
 const db = require('../db.js');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 exports.auth = async (req, res) => {
     let username = req.body.Username;
@@ -14,9 +15,15 @@ exports.auth = async (req, res) => {
                 return res.status(500).json('Username does not exist!');
             }
 
-            let token = jwt.sign({ username: user.Username, email: user.Email }, process.env.TOKEN_KEY, { expiresIn: '2h' });
-            user.Token = token;
-            await db.pool.query('UPDATE Users SET Token=? WHERE ID=?', [token, user.ID]);
+            if (bcrypt.compareSync(password, user.Password)) {
+                let token = jwt.sign({ username: user.Username, email: user.Email }, process.env.TOKEN_KEY, { expiresIn: '2h' });
+                user.Token = token;
+                await db.pool.query('UPDATE Users SET Token=? WHERE ID=?', [token, user.ID]);
+            } else {
+                return res.status(500).json('Password is incorrect!');
+            }
+
+            user.Password = undefined;
             return res.status(200).json(user);
         } else {
             return res.status(500).json('Please enter Username and Password!');
@@ -40,7 +47,9 @@ exports.register = async (req, res) => {
                 return res.status(500).json('Username already exists!');
             }
 
-            await db.pool.query('INSERT INTO Users (Username, Password, FullName, Email) VALUES (?, ?, ?, ?)', [username, password, fullname, email]);
+            let hashedPassword = bcrypt.hashSync(password, 10);
+
+            await db.pool.query('INSERT INTO Users (Username, Password, FullName, Email) VALUES (?, ?, ?, ?)', [username, hashedPassword, fullname, email]);
 
             return res.status(201).json('User registered successfully!');
         } else {
