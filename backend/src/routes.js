@@ -15,6 +15,7 @@ module.exports = (app) => {
     router.post('/Categories', Categorycontroller.post);
 
     // Scans
+    router.get('/Scans', Scancontroller.get);
     router.post('/Scans', Scancontroller.post);
 
     // Users

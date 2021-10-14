@@ -2,7 +2,7 @@ LagerLand
 
 ### Backup Database schema
 
-docker exec -i mariadb_lager sh -c 'exec mysqldump -d -ulagerland -p"91gSn2CF83cySuuS5doQ"' < dump.sql
+docker exec -i mariadb_lager sh -c "exec mysqldump -d --database lagerland -uroot -pt5gE4zmRsUF9S9YTG11U" dump.sql
 
 ### Restore Database schema
 

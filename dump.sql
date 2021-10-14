@@ -50,6 +50,7 @@ CREATE TABLE `Items` (
   `Name` varchar(255) NOT NULL,
   `Description` varchar(2048) DEFAULT NULL,
   `Categories` int(11) NOT NULL,
+  `CheckStatus` int(1) DEFAULT 0,
   PRIMARY KEY (`ID`),
   KEY `Categories` (`Categories`),
   CONSTRAINT `Items_ibfk_1` FOREIGN KEY (`Categories`) REFERENCES `Categories` (`ID`)
@@ -103,4 +104,4 @@ CREATE TABLE `Users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-10-14  6:58:35
+-- Dump completed on 2021-10-14 11:00:50
