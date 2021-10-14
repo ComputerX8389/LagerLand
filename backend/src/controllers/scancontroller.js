@@ -3,10 +3,10 @@ const db = require('../db.js');
 exports.get = async (req, res) => {
     try {
         const result = await db.pool.query('SELECT i.Name, i.Description, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID');
-        res.send(result);
+        return res.status(200).json(result);
     } catch (err) {
         console.log(err);
-        res.status(500).send('Internal server error');
+        return res.status(500).json('Internal server error');
     }
 };
 
@@ -15,7 +15,7 @@ exports.post = async (req, res) => {
         const user = await db.pool.query('SELECT ID FROM Users WHERE Username = ?', [req.body.Username]);
 
         if (user.length === 0) {
-            res.status(404).send('User not found');
+            res.status(404).json('User not found');
             return;
         }
 
@@ -24,11 +24,9 @@ exports.post = async (req, res) => {
 
         const result = await db.pool.query('INSERT INTO Scans (User, Item, ScanTime) VALUES (?, ?, ?)', [userID, req.body.Item, DateTime]);
 
-        res.send(result);
-        console.log('Item added', result);
+        return res.status(201).json(result);
     } catch (err) {
         console.log(err);
-
-        res.status(500).send('Internal server error');
+        res.status(500).json('Internal server error');
     }
 };

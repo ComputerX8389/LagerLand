@@ -3,17 +3,22 @@ const db = require('../db.js');
 exports.get = async (req, res) => {
     try {
         const result = await db.pool.query('SELECT * FROM Categories');
-        res.send(result);
+        return res.status(200).json(result);
     } catch (err) {
-        throw err;
+        console.log(err);
+        return res.status(500).json('Internal server error');
     }
 };
 
 exports.post = async (req, res) => {
+    const name = req.body.Name;
+    const description = req.body.Description;
+
     try {
-        const result = await db.pool.query('INSERT INTO Categories (Name, Description) VALUES (?, ?)', [req.body.Name, req.body.Description]);
-        res.send(result);
+        const result = await db.pool.query('INSERT INTO Categories (Name, Description) VALUES (?, ?)', [name, description]);
+        return res.status(201).json(result);
     } catch (err) {
-        throw err;
+        console.log(err);
+        return res.status(500).json('Internal server error');
     }
 };

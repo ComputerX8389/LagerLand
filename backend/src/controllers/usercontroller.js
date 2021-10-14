@@ -3,8 +3,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 exports.auth = async (req, res) => {
-    let username = req.body.Username;
-    let password = req.body.Password;
+    const username = req.body.Username;
+    const password = req.body.Password;
 
     try {
         if (username && password) {
@@ -35,10 +35,10 @@ exports.auth = async (req, res) => {
 };
 
 exports.register = async (req, res) => {
-    let username = req.body.Username;
-    let password = req.body.Password;
-    let fullname = req.body.FullName;
-    let email = req.body.Email;
+    const username = req.body.Username;
+    const password = req.body.Password;
+    const fullname = req.body.FullName;
+    const email = req.body.Email;
 
     try {
         if (username && password && fullname && email) {

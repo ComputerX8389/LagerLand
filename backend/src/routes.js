@@ -8,14 +8,14 @@ const router = require('express').Router();
 module.exports = (app) => {
     // Items
     router.get('/Items', auth, Itemcontroller.get);
-    router.post('/Items', auth, Itemcontroller.post);
+    router.post('/Items', Itemcontroller.post);
 
     // Categories
-    router.get('/Categories', auth, Categorycontroller.get);
-    router.post('/Categories', auth, Categorycontroller.post);
+    router.get('/Categories', Categorycontroller.get);
+    router.post('/Categories', Categorycontroller.post);
 
     // Scans
-    router.post('/Scans', auth, Scancontroller.post);
+    router.post('/Scans', Scancontroller.post);
 
     // Users
     router.post('/Auth', Usercontroller.auth);
