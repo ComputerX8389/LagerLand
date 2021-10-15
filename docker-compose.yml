@@ -1,27 +1,26 @@
 version: '3.1'
 
 services:
-  mariadb_lager:
-    container_name: mariadb_lager
-    image: mariadb
-    ports:
-      - 3306:3306
-    volumes: 
-      - mariadb_lager_db=/data/db
-    environment:
-      MARIADB_ROOT_PASSWORD  : t5gE4zmRsUF9S9YTG11U
-      MARIADB_DATABASE : lagerland
-      MARIADB_USER : lagerland
-      MARIADB_PASSWORD : 91gSn2CF83cySuuS5doQ
+    mariadb_lager:
+        container_name: mariadb_lager
+        image: mariadb
+        ports:
+            - 3306:3306
+        volumes:
+            - mariadb_lager_db=/data/db
+        environment:
+            MARIADB_ROOT_PASSWORD: t5gE4zmRsUF9S9YTG11U
+            MARIADB_DATABASE: lagerland
+            MARIADB_USER: lagerland
+            MARIADB_PASSWORD: 91gSn2CF83cySuuS5doQ
 
-  adminer:
-    image: adminer
-    container_name: adminer
-    ports:
-      - 8000:8080
-    environment:
-      - ADMINER_DESIGN=pappu687
+    adminer:
+        image: adminer
+        container_name: adminer
+        ports:
+            - 8000:8080
+        environment:
+            - ADMINER_DESIGN=pappu687
 
 volumes:
-  mariadb_lager_db:ls
-  
+    mariadb_lager_db:
