@@ -23,17 +23,11 @@ const router = useRouter();
 let username = ref('');
 let password = ref('');
 
-const onClick = () => {
-    axios
-        .post(process.env.VUE_APP_API_URL + '/Auth', {
-            Username: username.value,
-            Password: password.value,
-        })
-        .then((response) => {
-            let user = response.data;
-            store.commit('user', user);
-            router.push('Items');
-        });
+const onClick = async () => {
+    let response = await axios.post(process.env.VUE_APP_API_URL + '/Auth', { Username: username.value, Password: password.value });
+    let user = response.data;
+    store.commit('user', user);
+    router.push('Items');
 };
 </script>
 
