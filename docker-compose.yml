@@ -7,7 +7,7 @@ services:
         ports:
             - 3306:3306
         volumes:
-            - mariadb_lager_db=/data/db
+            - mariadb_lager_db=/var/lib/mysql
         environment:
             MARIADB_ROOT_PASSWORD: t5gE4zmRsUF9S9YTG11U
             MARIADB_DATABASE: lagerland

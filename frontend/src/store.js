@@ -1,6 +1,6 @@
 var store = {
     state: {
-        user: {},
+        user: null,
     },
     commit(variable, value) {
         console.log('Store commit: setting ' + variable + ' to', value);
