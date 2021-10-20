@@ -32,6 +32,11 @@ export default {
                     to: '/about',
                     icon: 'pi pi-fw pi-power-off',
                 },
+                {
+                    label: 'Scan',
+                    to: '/scan',
+                    icon: 'pi pi-fw pi-power-off',
+                },
             ],
         };
     },

@@ -27,11 +27,11 @@ npm run lint
 ### Docker build
 
 ```
-docker build -t computerx/lagerlandfrontend .
+docker build -t computerx/lagerlandbackend .
 ```
 
 ### Docker run
 
 ```
-docker run -d --name LagerLandFrontend -p 8888:80 computerx/lagerlandfrontend
+docker run -d --name LagerLandBackend -p 3000:3000 -e DB_HOST=192.168.10.10 -e DB_USER=lagerland -e DB_PASSWORD=123123123 -e TOKEN_KEY=secure computerx/lagerlandbackend
 ```

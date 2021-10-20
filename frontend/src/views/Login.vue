@@ -1,7 +1,7 @@
 <template>
     <div class="p-grid largeMarginTop">
         <div class="p-col-12">
-            <InputText type="username" v-model="username" />
+            <InputText type="text" v-model="username" />
         </div>
         <div class="p-col-12">
             <InputText type="password" v-model="password" />
