@@ -17,9 +17,13 @@ import 'primeicons/primeicons.css'; //icons
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import Menubar from 'primevue/menubar';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
 
 app.component('Button', Button);
 app.component('InputText', InputText);
 app.component('Menubar', Menubar);
+app.component('DataTable', DataTable);
+app.component('Column', Column);
 
 app.mount('#app');

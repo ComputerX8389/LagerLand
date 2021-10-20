@@ -1,5 +1,5 @@
 <template>
-    <div class="p-grid">
+    <div class="p-grid largeMarginTop">
         <div class="p-col-12">
             <InputText type="username" v-model="username" />
         </div>
@@ -27,21 +27,30 @@ export default {
         async onClick() {
             console.log('username', this.username);
             console.log('password', this.password);
-            let response = await axios.post('http://localhost:3000/Auth', {
+            let response = await axios.post(process.env.VUE_APP_API_URL + '/Auth', {
                 Username: this.username,
                 Password: this.password,
             });
             let user = response.data;
             store.commit('user', user);
-            this.$router.push('Items');
+            console.log('Setting token:', user.Token);
+
+            // Set default header for all requests
+            axios.defaults.headers.common['x-access-token'] = user.Token;
+
             this.$emit('setNavbar', true);
+            this.$router.push('Items');
         },
     },
 };
 </script>
 
-<style>
+<style scoped>
 .RightMargin {
     margin-right: 10px !important;
+}
+
+.largeMarginTop {
+    margin-top: 150px !important;
 }
 </style>

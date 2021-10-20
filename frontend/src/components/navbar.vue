@@ -1,5 +1,5 @@
 <template>
-    <div v-if="showNavbar">
+    <div v-if="showNavbar" class="marginButtom">
         <Menubar :model="items">
             <template #item="{item}">
                 <router-link :to="item.to" custom v-slot="{ href, navigate, isActive }">
@@ -41,5 +41,8 @@ export default {
 <style scoped>
 .active-link {
     color: rgb(0, 119, 255) !important;
+}
+.marginButtom {
+    margin-bottom: 10px;
 }
 </style>
