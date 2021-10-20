@@ -29,11 +29,12 @@ exports.get = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
-    const userID = req.body.UserID;
     const itemID = req.body.ItemID;
 
     try {
-        const user = await db.pool.query('SELECT ID FROM Users WHERE ID = ?', [userID]);
+        let token = req.headers['x-access-token'];
+
+        const user = await db.pool.query("SELECT ID FROM Users WHERE Token = '?'", [token]);
         const item = await db.pool.query('SELECT ID, CheckStatus FROM Items WHERE ID = ?', [itemID]);
         let checkStatus = item[0].CheckStatus;
 
