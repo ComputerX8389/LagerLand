@@ -13,21 +13,30 @@
     </div>
 </template>
 
-<script async setup>
-import { ref } from 'vue';
+<script>
 import axios from 'axios';
 import store from '@/store';
-import { useRouter } from 'vue-router';
-
-const router = useRouter();
-let username = ref('');
-let password = ref('');
-
-const onClick = async () => {
-    let response = await axios.post(process.env.VUE_APP_API_URL + '/Auth', { Username: username.value, Password: password.value });
-    let user = response.data;
-    store.commit('user', user);
-    router.push('Items');
+export default {
+    data() {
+        return {
+            username: '',
+            password: '',
+        };
+    },
+    methods: {
+        async onClick() {
+            console.log('username', this.username);
+            console.log('password', this.password);
+            let response = await axios.post('http://localhost:3000/Auth', {
+                Username: this.username,
+                Password: this.password,
+            });
+            let user = response.data;
+            store.commit('user', user);
+            this.$router.push('Items');
+            this.$emit('setNavbar', true);
+        },
+    },
 };
 </script>
 

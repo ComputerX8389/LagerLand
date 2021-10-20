@@ -1,10 +1,27 @@
 <template>
-    <navbar></navbar>
-    <router-view />
+    <navbar :showNavbar="navbar"></navbar>
+    <router-view @setNavbar="setNavbar" />
 </template>
 
-<script setup>
+<script>
 import navbar from './components/navbar.vue';
+
+export default {
+    components: {
+        navbar,
+    },
+    data() {
+        return {
+            navbar: false,
+        };
+    },
+    methods: {
+        setNavbar(state) {
+            console.log('state', state);
+            this.navbar = state;
+        },
+    },
+};
 </script>
 
 <style>

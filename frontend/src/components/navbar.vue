@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="showNavbar">
         <Menubar :model="items">
             <template #item="{item}">
                 <router-link :to="item.to" custom v-slot="{ href, navigate, isActive }">
@@ -10,22 +10,32 @@
     </div>
 </template>
 
-<script setup>
-//import { ref } from 'vue';
-//import store from '@/store';
-
-let items = [
-    {
-        label: 'Items',
-        to: '/items',
-        icon: 'pi pi-fw pi-power-off',
+<script>
+export default {
+    name: 'Navbar',
+    props: {
+        showNavbar: {
+            type: Boolean,
+            default: false,
+        },
     },
-    {
-        label: 'About',
-        to: '/about',
-        icon: 'pi pi-fw pi-power-off',
+    data() {
+        return {
+            items: [
+                {
+                    label: 'Items',
+                    to: '/items',
+                    icon: 'pi pi-fw pi-power-off',
+                },
+                {
+                    label: 'About',
+                    to: '/about',
+                    icon: 'pi pi-fw pi-power-off',
+                },
+            ],
+        };
     },
-];
+};
 </script>
 
 <style scoped>
