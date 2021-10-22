@@ -34,7 +34,7 @@ exports.post = async (req, res) => {
     try {
         let token = req.headers['x-access-token'];
 
-        const user = await db.pool.query("SELECT ID FROM Users WHERE Token = '?'", [token]);
+        const user = await db.pool.query('SELECT ID FROM Users WHERE Token = ?', [token]);
         const item = await db.pool.query('SELECT ID, CheckStatus FROM Items WHERE ID = ?', [itemID]);
         let checkStatus = item[0].CheckStatus;
 
@@ -44,6 +44,7 @@ exports.post = async (req, res) => {
         if (user.length === 0) {
             return res.status(400).json('User not found');
         }
+        const userID = user[0].ID;
         const DateTime = new Date();
 
         const scanin = await db.pool.query('INSERT INTO Scans (User, Item, ScanTime) VALUES (?, ?, ?)', [userID, itemID, DateTime]);
