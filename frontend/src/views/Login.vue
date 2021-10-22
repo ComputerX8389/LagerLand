@@ -27,19 +27,32 @@ export default {
         async onClick() {
             console.log('username', this.username);
             console.log('password', this.password);
-            let response = await axios.post(process.env.VUE_APP_API_URL + '/Auth', {
-                Username: this.username,
-                Password: this.password,
-            });
-            let user = response.data;
-            store.commit('user', user);
-            console.log('Setting token:', user.Token);
+            try {
+                let response = await axios.post(process.env.VUE_APP_API_URL + '/Auth', {
+                    Username: this.username,
+                    Password: this.password,
+                });
 
-            // Set default header for all requests
-            axios.defaults.headers.common['x-access-token'] = user.Token;
+                console.log('response', response);
 
-            this.$emit('setNavbar', true);
-            this.$router.push('Items');
+                let user = response.data;
+                store.commit('user', user);
+                console.log('Setting token:', user.Token);
+
+                // Set default header for all requests
+                axios.defaults.headers.common['x-access-token'] = user.Token;
+
+                this.$emit('setNavbar', true);
+                this.$toast.add({ severity: 'success', summary: 'Logged in', detail: 'You are logged in as ' + store.get('user')['FullName'], life: 3000 });
+                this.$router.push('Items');
+            } catch (error) {
+                console.log(error);
+                if (error.response.status === 401) {
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Username or password is incorrect', life: 3000 });
+                } else {
+                    this.$toast.add({ severity: 'error', summary: 'Unknown error', detail: 'thrown error', life: 3000 });
+                }
+            }
         },
     },
 };

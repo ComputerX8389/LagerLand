@@ -12,7 +12,7 @@ exports.auth = async (req, res) => {
             let user = results[0];
 
             if (results.length == 0) {
-                return res.status(500).json('Username does not exist!');
+                return res.status(401).json('Username or password is incorrect');
             }
 
             if (bcrypt.compareSync(password, user.Password)) {
@@ -20,13 +20,13 @@ exports.auth = async (req, res) => {
                 user.Token = token;
                 await db.pool.query('UPDATE Users SET Token=? WHERE ID=?', [token, user.ID]);
             } else {
-                return res.status(500).json('Password is incorrect!');
+                return res.status(401).json('Username or password is incorrect');
             }
 
             user.Password = undefined;
             return res.status(200).json(user);
         } else {
-            return res.status(500).json('Please enter Username and Password!');
+            return res.status(401).json('Username or password is incorrect');
         }
     } catch (error) {
         console.log(error);

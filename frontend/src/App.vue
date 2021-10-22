@@ -1,4 +1,5 @@
 <template>
+    <Toast />
     <navbar :showNavbar="navbar"></navbar>
     <router-view @setNavbar="setNavbar" />
 </template>

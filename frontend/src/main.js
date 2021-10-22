@@ -19,11 +19,15 @@ import InputText from 'primevue/inputtext';
 import Menubar from 'primevue/menubar';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import ToastService from 'primevue/toastservice';
+import Toast from 'primevue/toast';
 
 app.component('Button', Button);
 app.component('InputText', InputText);
 app.component('Menubar', Menubar);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
+app.component('Toast', Toast);
 
+app.use(ToastService);
 app.mount('#app');
