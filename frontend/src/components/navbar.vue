@@ -25,17 +25,14 @@ export default {
                 {
                     label: 'Items',
                     to: '/items',
-                    icon: 'pi pi-fw pi-power-off',
                 },
                 {
                     label: 'About',
                     to: '/about',
-                    icon: 'pi pi-fw pi-power-off',
                 },
                 {
                     label: 'Scan',
                     to: '/scan',
-                    icon: 'pi pi-fw pi-power-off',
                 },
             ],
         };

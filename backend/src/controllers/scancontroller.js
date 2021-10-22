@@ -3,7 +3,8 @@ const db = require('../db.js');
 exports.get = async (req, res) => {
     try {
         const result = await db.pool.query(`
-            SELECT sc.ScanTime,
+            SELECT sc.ID as ScanID,
+            sc.ScanTime,
             it.CheckStatus,
             us.ID as UserID,
             us.FullName,
@@ -16,7 +17,8 @@ exports.get = async (req, res) => {
             FROM Scans as sc
             JOIN Users as us ON sc.User = us.ID
             JOIN Items as it ON sc.Item = it.ID
-            JOIN Categories as ga ON it.Categories = ga.ID`);
+            JOIN Categories as ga ON it.Categories = ga.ID
+            ORDER BY sc.ScanTime DESC`);
 
         result.forEach((element) => {
             element.CheckStatus = Boolean(element.CheckStatus);

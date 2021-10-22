@@ -1,5 +1,5 @@
 <template>
-    <div class="p-grid largeMarginTop">
+    <div class="p-grid largeMarginTop" v-if="loading == false">
         <div class="p-col-12">
             <InputText type="text" v-model="username" />
         </div>
@@ -11,6 +11,9 @@
             <Button label="Register" @click="onClick" />
         </div>
     </div>
+    <div class="p-grid largeMarginTop" v-else>
+        <ProgressSpinner />
+    </div>
 </template>
 
 <script>
@@ -21,10 +24,12 @@ export default {
         return {
             username: '',
             password: '',
+            loading: false,
         };
     },
     methods: {
         async onClick() {
+            this.loading = true;
             console.log('username', this.username);
             console.log('password', this.password);
             try {
@@ -52,6 +57,8 @@ export default {
                 } else {
                     this.$toast.add({ severity: 'error', summary: 'Unknown error', detail: 'thrown error', life: 3000 });
                 }
+            } finally {
+                this.loading = false;
             }
         },
     },

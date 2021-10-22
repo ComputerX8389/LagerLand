@@ -21,6 +21,8 @@ import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
 import ToastService from 'primevue/toastservice';
 import Toast from 'primevue/toast';
+import ProgressSpinner from 'primevue/progressspinner';
+import Card from 'primevue/card';
 
 app.component('Button', Button);
 app.component('InputText', InputText);
@@ -28,6 +30,8 @@ app.component('Menubar', Menubar);
 app.component('DataTable', DataTable);
 app.component('Column', Column);
 app.component('Toast', Toast);
+app.component('ProgressSpinner', ProgressSpinner);
+app.component('Card', Card);
 
 app.use(ToastService);
 app.mount('#app');
