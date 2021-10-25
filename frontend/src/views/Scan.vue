@@ -45,7 +45,7 @@ export default {
                     console.log(json);
                     let itemID = json.itemID;
 
-                    let response = await axios.post(process.env.VUE_APP_API_URL + '/scans', {
+                    let response = await axios.post('/scans', {
                         ItemID: itemID,
                     });
                     console.log(response);
@@ -60,7 +60,7 @@ export default {
 
         async updateScans() {
             try {
-                let response = await axios.get(process.env.VUE_APP_API_URL + '/scans');
+                let response = await axios.get('/scans');
                 response.data.forEach((element) => {
                     element.ScanTime = new Date(element.ScanTime);
                 });

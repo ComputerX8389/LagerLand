@@ -27,6 +27,10 @@ export default {
                     to: '/items',
                 },
                 {
+                    label: 'Categories',
+                    to: '/Categories',
+                },
+                {
                     label: 'Scan',
                     to: '/scan',
                 },

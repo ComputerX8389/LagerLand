@@ -1,9 +1,7 @@
 <template>
-    <DataTable :value="items">
+    <DataTable :value="categories">
         <Column field="Name" header="Item"></Column>
         <Column field="Description" header="Description"></Column>
-        <Column field="CategoryName" header="Category"></Column>
-        <Column field="CheckStatus" header="CheckStatus"></Column>
     </DataTable>
 </template>
 
@@ -13,14 +11,14 @@ import axios from '@/apiClient';
 export default {
     data() {
         return {
-            items: [],
+            categories: [],
         };
     },
     async created() {
         try {
-            let response = await axios.get('/items');
+            let response = await axios.get('/categories');
             console.log(response.data);
-            this.items = response.data;
+            this.categories = response.data;
         } catch (error) {
             console.log(error);
         }

@@ -50,7 +50,7 @@ exports.post = async (req, res) => {
         const DateTime = new Date();
 
         const scanin = await db.pool.query('INSERT INTO Scans (User, Item, ScanTime) VALUES (?, ?, ?)', [userID, itemID, DateTime]);
-        const itemup = await db.pool.query('UPDATE Items SET CheckStatus=? WHERE ID=?', [!checkStatus, userID]);
+        const itemup = await db.pool.query('UPDATE Items SET CheckStatus=? WHERE ID=?', [!checkStatus, itemID]);
 
         return res.status(201).json({ Scan: scanin, Item: itemup });
     } catch (err) {

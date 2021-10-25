@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         setNavbar(state) {
-            console.log('state', state);
+            console.log('Navbar', state);
             this.navbar = state;
         },
     },
