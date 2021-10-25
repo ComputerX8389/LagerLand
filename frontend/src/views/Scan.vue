@@ -6,11 +6,9 @@
                 <template #content>
                     <p>User: {{ scan.FullName }}</p>
                     <p>Item: {{ scan.ItemName }}</p>
-                    <p>Gategory: {{ scan.GategoryName }}</p>
                 </template>
                 <template #footer>
-                    <!--<Button icon="pi pi-check" label="Save" />
-                    <Button icon="pi pi-times" label="Cancel" class="p-button-secondary" style="margin-left: .5em" />-->
+                    <itemDialog :itemID="scan.ItemID" />
                 </template>
             </Card>
         </div>
@@ -25,11 +23,13 @@
 
 <script>
 import { QrStream } from 'vue3-qr-reader';
-import axios from 'axios';
+import axios from '@/apiClient';
+import itemDialog from '@/components/itemDialog.vue';
 
 export default {
     components: {
         QrStream,
+        itemDialog,
     },
     data() {
         return {

@@ -17,6 +17,7 @@
 </template>
 
 <script>
+// Avoid apiClient.js here to avoid redirect for wrong password
 import axios from 'axios';
 import store from '@/store';
 export default {
@@ -26,6 +27,9 @@ export default {
             password: '',
             loading: false,
         };
+    },
+    created() {
+        this.$emit('setNavbar', false);
     },
     methods: {
         async onClick() {

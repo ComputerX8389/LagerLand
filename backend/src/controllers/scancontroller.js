@@ -44,7 +44,7 @@ exports.post = async (req, res) => {
             return res.status(400).json('Item not found');
         }
         if (user.length === 0) {
-            return res.status(400).json('User not found');
+            return res.status(401).json('User not found');
         }
         const userID = user[0].ID;
         const DateTime = new Date();

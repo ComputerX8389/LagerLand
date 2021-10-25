@@ -2,7 +2,9 @@ const db = require('../db.js');
 
 exports.get = async (req, res) => {
     try {
-        const result = await db.pool.query('SELECT i.ID, i.Name, i.Description, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID');
+        const result = await db.pool.query(
+            'SELECT i.ID, i.Name, i.Description, i.CheckStatus, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID'
+        );
         return res.status(200).send(result);
     } catch (err) {
         console.log(err);
@@ -15,10 +17,10 @@ exports.getID = async (req, res) => {
 
     try {
         const result = await db.pool.query(
-            'SELECT i.ID, i.Name, i.Description, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID WHERE i.ID = ?',
+            'SELECT i.ID, i.Name, i.Description, i.CheckStatus, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID WHERE i.ID = ?',
             [id]
         );
-        return res.status(200).send(result);
+        return res.status(200).send(result[0]);
     } catch (err) {
         console.log(err);
         return res.status(500).send('Internal server error');

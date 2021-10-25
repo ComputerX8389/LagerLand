@@ -27,10 +27,6 @@ export default {
                     to: '/items',
                 },
                 {
-                    label: 'About',
-                    to: '/about',
-                },
-                {
                     label: 'Scan',
                     to: '/scan',
                 },

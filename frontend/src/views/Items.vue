@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from '@/apiClient';
 
 export default {
     data() {
