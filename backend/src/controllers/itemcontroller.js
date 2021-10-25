@@ -10,6 +10,21 @@ exports.get = async (req, res) => {
     }
 };
 
+exports.getID = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const result = await db.pool.query(
+            'SELECT i.ID, i.Name, i.Description, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID WHERE i.ID = ?',
+            [id]
+        );
+        return res.status(200).send(result);
+    } catch (err) {
+        console.log(err);
+        return res.status(500).send('Internal server error');
+    }
+};
+
 exports.post = async (req, res) => {
     const catagoryID = req.body.CatagoryID;
     const name = req.body.Name;

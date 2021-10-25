@@ -9,6 +9,7 @@ module.exports = (app) => {
     // Items
     router.get('/Items', auth, Itemcontroller.get);
     router.post('/Items', auth, Itemcontroller.post);
+    router.get('/Items/:id', auth, Itemcontroller.getID);
 
     // Categories
     router.get('/Categories', auth, Categorycontroller.get);
