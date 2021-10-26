@@ -37,8 +37,8 @@ exports.post = async (req, res) => {
         let token = req.headers['x-access-token'];
 
         const user = await db.pool.query('SELECT ID FROM Users WHERE Token = ?', [token]);
-        const item = await db.pool.query('SELECT ID, CheckStatus FROM Items WHERE ID = ?', [itemID]);
-        let checkStatus = item[0].CheckStatus;
+        const itemArray = await db.pool.query('SELECT * FROM Items WHERE ID = ?', [itemID]);
+        let item = itemArray[0];
 
         if (item.length === 0) {
             return res.status(400).json('Item not found');
@@ -50,9 +50,10 @@ exports.post = async (req, res) => {
         const DateTime = new Date();
 
         const scanin = await db.pool.query('INSERT INTO Scans (User, Item, ScanTime) VALUES (?, ?, ?)', [userID, itemID, DateTime]);
-        const itemup = await db.pool.query('UPDATE Items SET CheckStatus=? WHERE ID=?', [!checkStatus, itemID]);
-
-        return res.status(201).json({ Scan: scanin, Item: itemup });
+        const itemup = await db.pool.query('UPDATE Items SET CheckStatus=? WHERE ID=?', [!item.CheckStatus, itemID]);
+        // Convert checkstatus to boolean and update item
+        item.CheckStatus = !item.CheckStatus;
+        return res.status(201).json({ Scan: scanin, ItemUpdate: itemup, Item: item });
     } catch (err) {
         console.log(err);
         res.status(500).json('Internal server error');

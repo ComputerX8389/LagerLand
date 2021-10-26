@@ -2,7 +2,7 @@
     <div class="p-grid">
         <div class="p-col-8">
             <Card class="cardStyle" v-for="scan in scans" :key="scan.ScanID">
-                <template #title> {{ scan.ScanTime.toLocaleString() }} </template>
+                <template #title> {{ scan.ScanTime.toLocaleString('da-DK') }} </template>
                 <template #content>
                     <p>User: {{ scan.FullName }}</p>
                     <p>Item: {{ scan.ItemName }}</p>
@@ -48,8 +48,14 @@ export default {
                     let response = await axios.post('/scans', {
                         ItemID: itemID,
                     });
-                    console.log(response);
-                    this.$toast.add({ severity: 'success', summary: 'Item scanned', detail: 'Nice 👌', life: 3000 });
+                    console.log('Scanned', response.data);
+                    let scannedItem = response.data.Item;
+                    this.$toast.add({
+                        severity: 'success',
+                        summary: scannedItem.Name + ' scanned',
+                        detail: scannedItem.Name + ' have been checked ' + (scannedItem.CheckStatus == 0 ? 'In' : 'Out'),
+                        life: 3000,
+                    });
                     this.updateScans();
                 }
             } catch (error) {
