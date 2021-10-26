@@ -1,6 +1,12 @@
 <template>
-    <div class="p-grid">
-        <div class="p-col-8">
+    <div class="p-grid p-flex-row-reverse">
+        <div class="p-md-5 p-lg-4">
+            <p>Scan item</p>
+            <div class="qrCodeStreamViewer">
+                <QrStream @decode="onDecode" class="qrCodeStreamViewer" />
+            </div>
+        </div>
+        <div class="p-md-7 p-lg-8">
             <Card class="cardStyle" v-for="scan in scans" :key="scan.ScanID">
                 <template #title> {{ scan.ScanTime.toLocaleString('da-DK') }} </template>
                 <template #content>
@@ -11,12 +17,6 @@
                     <itemDialog :itemID="scan.ItemID" />
                 </template>
             </Card>
-        </div>
-        <div class="p-col-4">
-            <p>Scan item</p>
-            <div class="qrCodeStreamViewer">
-                <QrStream @decode="onDecode" />
-            </div>
         </div>
     </div>
 </template>
@@ -91,5 +91,6 @@ export default {
 }
 .qrCodeStreamViewer {
     max-height: 300px;
+    position: relative !important;
 }
 </style>

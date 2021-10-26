@@ -19,7 +19,7 @@ export default {
     async created() {
         try {
             let response = await axios.get('/items');
-            console.log(response.data);
+            console.log('Items', response.data);
             this.items = response.data;
         } catch (error) {
             console.log(error);
