@@ -16,6 +16,7 @@ import 'primeicons/primeicons.css'; //icons
 // Primevue components
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
 import Menubar from 'primevue/menubar';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
@@ -27,6 +28,7 @@ import Dialog from 'primevue/dialog';
 
 app.component('Button', Button);
 app.component('InputText', InputText);
+app.component('Textarea', Textarea);
 app.component('Menubar', Menubar);
 app.component('DataTable', DataTable);
 app.component('Column', Column);

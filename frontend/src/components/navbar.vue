@@ -28,7 +28,7 @@ export default {
                 },
                 {
                     label: 'Categories',
-                    to: '/Categories',
+                    to: '/categories',
                 },
                 {
                     label: 'Scan',

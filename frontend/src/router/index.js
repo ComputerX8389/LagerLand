@@ -9,17 +9,17 @@ const routes = [
         component: Login,
     },
     {
-        path: '/Items',
+        path: '/items',
         name: 'Items',
         component: () => import(/* webpackChunkName: "Items" */ '@/views/Items.vue'),
     },
     {
-        path: '/Categories',
+        path: '/categories',
         name: 'Categories',
         component: () => import(/* webpackChunkName: "Categories" */ '@/views/Categories.vue'),
     },
     {
-        path: '/Scan',
+        path: '/scan',
         name: 'Scan',
         component: () => import(/* webpackChunkName: "Items" */ '@/views/Scan.vue'),
     },
