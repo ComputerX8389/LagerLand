@@ -10,13 +10,15 @@
 
             <p class="descTxt">Description</p>
             <Textarea v-model="desc" :autoResize="true" rows="5" cols="30" />
-
-            <Button @click="btnAdd">Create</Button>
+            <br />
+            <Button @click="btnAdd" class="floatRight">Create</Button>
         </div>
     </Dialog>
 </template>
 
 <script>
+import axios from '@/apiClient';
+
 export default {
     name: 'Create',
     data() {
@@ -31,9 +33,25 @@ export default {
             this.display = true;
         },
 
-        btnAdd() {
-            this.$emit('created', this.name, this.desc);
-            this.display = false;
+        async btnAdd() {
+            try {
+                let response = await axios.post('/categories', {
+                    Name: this.name,
+                    Description: this.desc,
+                });
+                console.log('New category', response);
+                this.$emit('created');
+                this.$toast.add({ severity: 'success', summary: 'Created', detail: 'Category ' + this.name + ' has been created', life: 3000 });
+                this.display = false;
+            } catch (error) {
+                console.log(error);
+
+                if (error.response.status === 400) {
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Name is properly empty', life: 3000 });
+                } else {
+                    this.$toast.add({ severity: 'error', summary: 'Unknown error', detail: 'Something went wrong', life: 3000 });
+                }
+            }
         },
     },
 };
@@ -50,5 +68,9 @@ export default {
     margin-bottom: 3px;
     margin-left: 8px;
     color: #6c757d;
+}
+
+.floatRight {
+    float: right !important;
 }
 </style>

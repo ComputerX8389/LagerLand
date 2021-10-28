@@ -1,10 +1,16 @@
 <template>
-    <DataTable :value="categories">
-        <Column field="Name" header="Item"></Column>
-        <Column field="Description" header="Description"></Column>
-    </DataTable>
+    <div class="p-grid">
+        <div class="p-col-12">
+            <DataTable :value="categories">
+                <Column field="Name" header="Item"></Column>
+                <Column field="Description" header="Description"></Column>
+            </DataTable>
+        </div>
 
-    <create :BTN_txt="'Add category'" @created="categoryAdded" />
+        <div class="p-col-12">
+            <create @created="updateCategoryies" />
+        </div>
+    </div>
 </template>
 
 <script>
@@ -22,21 +28,22 @@ export default {
         };
     },
     methods: {
-        categoryAdded(name, desc) {
+        async updateCategoryies() {
             console.log('category added');
-            console.log(name, desc);
+
+            try {
+                let response = await axios.get('/categories');
+                console.log(response.data);
+                this.categories = response.data;
+            } catch (error) {
+                console.log(error);
+            }
         },
     },
-    async created() {
-        try {
-            let response = await axios.get('/categories');
-            console.log(response.data);
-            this.categories = response.data;
-        } catch (error) {
-            console.log(error);
-        }
+    created() {
+        this.updateCategoryies();
     },
 };
 </script>
 
-<style></style>
+<style scoped></style>

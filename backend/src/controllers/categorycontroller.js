@@ -15,6 +15,10 @@ exports.post = async (req, res) => {
     const description = req.body.Description;
 
     try {
+        // Check if name is empty
+        if (!name) {
+            return res.status(400).json('Bad request');
+        }
         const result = await db.pool.query('INSERT INTO Categories (Name, Description) VALUES (?, ?)', [name, description]);
         return res.status(201).json(result);
     } catch (err) {
