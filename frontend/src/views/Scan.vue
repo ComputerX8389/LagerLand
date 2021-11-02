@@ -83,7 +83,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .cardStyle {
     max-width: 300px;
     display: inline-block;

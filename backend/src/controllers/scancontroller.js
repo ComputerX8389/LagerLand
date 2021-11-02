@@ -18,7 +18,8 @@ exports.get = async (req, res) => {
             JOIN Users as us ON sc.User = us.ID
             JOIN Items as it ON sc.Item = it.ID
             JOIN Categories as ga ON it.Categories = ga.ID
-            ORDER BY sc.ScanTime DESC`);
+            ORDER BY sc.ScanTime DESC
+            LIMIT 10`);
 
         result.forEach((element) => {
             element.CheckStatus = Boolean(element.CheckStatus);
