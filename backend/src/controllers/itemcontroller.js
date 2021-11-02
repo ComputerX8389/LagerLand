@@ -33,7 +33,8 @@ exports.post = async (req, res) => {
     const description = req.body.Description;
 
     try {
-        if (!name || !description) {
+        // Check if name is empty
+        if (!name) {
             return res.status(400).json('Bad request');
         }
 

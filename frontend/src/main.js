@@ -25,6 +25,7 @@ import Toast from 'primevue/toast';
 import ProgressSpinner from 'primevue/progressspinner';
 import Card from 'primevue/card';
 import Dialog from 'primevue/dialog';
+import Dropdown from 'primevue/dropdown';
 
 app.component('Button', Button);
 app.component('InputText', InputText);
@@ -36,6 +37,7 @@ app.component('Toast', Toast);
 app.component('ProgressSpinner', ProgressSpinner);
 app.component('Card', Card);
 app.component('Dialog', Dialog);
+app.component('Dropdown', Dropdown);
 
 app.use(ToastService);
 app.mount('#app');
