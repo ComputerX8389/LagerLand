@@ -1,6 +1,8 @@
-const db = require('../db.js');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const mariadbRepo = require('../repositories/mariadb.js');
+
+const userRepo = mariadbRepo.userRepo();
 
 exports.auth = async (req, res) => {
     const username = req.body.Username;
@@ -8,17 +10,16 @@ exports.auth = async (req, res) => {
 
     try {
         if (username && password) {
-            let results = await db.pool.query('SELECT * FROM Users WHERE username = ?', [username]);
-            let user = results[0];
+            let user = await userRepo.getByUsername(username);
 
-            if (results.length == 0) {
+            if (!user) {
                 return res.status(401).json('Username or password is incorrect');
             }
 
             if (bcrypt.compareSync(password, user.Password)) {
                 let token = jwt.sign({ username: user.Username, email: user.Email }, process.env.TOKEN_KEY, { expiresIn: '2h' });
                 user.Token = token;
-                await db.pool.query('UPDATE Users SET Token=? WHERE ID=?', [token, user.ID]);
+                await userRepo.update(user.ID, 'Token', token);
             } else {
                 return res.status(401).json('Username or password is incorrect');
             }
@@ -42,14 +43,14 @@ exports.register = async (req, res) => {
 
     try {
         if (username && password && fullname && email) {
-            let results = await db.pool.query('SELECT * FROM Users WHERE username = ?', [username]);
-            if (results.length > 0) {
+            let user = await userRepo.getByUsername(username);
+            if (!user) {
                 return res.status(500).json('Username already exists!');
             }
 
             let hashedPassword = bcrypt.hashSync(password, 10);
 
-            await db.pool.query('INSERT INTO Users (Username, Password, FullName, Email) VALUES (?, ?, ?, ?)', [username, hashedPassword, fullname, email]);
+            await userRepo.create(username, hashedPassword, fullname, email);
 
             return res.status(201).json('User registered successfully!');
         } else {

@@ -1,8 +1,10 @@
-const db = require('../db.js');
+const mariadbRepo = require('../repositories/mariadb.js');
+
+const categoryRepo = mariadbRepo.categoryRepo();
 
 exports.get = async (req, res) => {
     try {
-        const result = await db.pool.query('SELECT * FROM Categories');
+        const result = await categoryRepo.getAll();
         return res.status(200).json(result);
     } catch (err) {
         console.log(err);
@@ -19,7 +21,7 @@ exports.post = async (req, res) => {
         if (!name) {
             return res.status(400).json('Bad request');
         }
-        const result = await db.pool.query('INSERT INTO Categories (Name, Description) VALUES (?, ?)', [name, description]);
+        const result = await categoryRepo.create(name, description);
         return res.status(201).json(result);
     } catch (err) {
         console.log(err);

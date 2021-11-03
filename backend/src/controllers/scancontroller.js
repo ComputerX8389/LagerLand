@@ -1,25 +1,13 @@
 const db = require('../db.js');
+const mariadbRepo = require('../repositories/mariadb.js');
+
+const scanRepo = mariadbRepo.scanRepo();
+const userRepo = mariadbRepo.userRepo();
+const itemRepo = mariadbRepo.itemRepo();
 
 exports.get = async (req, res) => {
     try {
-        const result = await db.pool.query(`
-            SELECT sc.ID as ScanID,
-            sc.ScanTime,
-            it.CheckStatus,
-            us.ID as UserID,
-            us.FullName,
-            us.Username,
-            us.Email,
-            it.ID as ItemID,
-            it.Name as ItemName,
-            ga.ID as GategoryID,
-            ga.Name as GategoryName
-            FROM Scans as sc
-            JOIN Users as us ON sc.User = us.ID
-            JOIN Items as it ON sc.Item = it.ID
-            JOIN Categories as ga ON it.Categories = ga.ID
-            ORDER BY sc.ScanTime DESC
-            LIMIT 10`);
+        const result = await scanRepo.getAll(10);
 
         result.forEach((element) => {
             element.CheckStatus = Boolean(element.CheckStatus);
@@ -35,23 +23,22 @@ exports.post = async (req, res) => {
     const itemID = req.body.ItemID;
 
     try {
-        let token = req.headers['x-access-token'];
+        const token = req.headers['x-access-token'];
 
-        const user = await db.pool.query('SELECT ID FROM Users WHERE Token = ?', [token]);
-        const itemArray = await db.pool.query('SELECT * FROM Items WHERE ID = ?', [itemID]);
-        let item = itemArray[0];
+        const user = await userRepo.getByToken(token);
+        let item = await itemRepo.getByID(itemID);
 
-        if (item.length === 0) {
+        if (!item) {
             return res.status(400).json('Item not found');
         }
-        if (user.length === 0) {
+        if (!user) {
             return res.status(401).json('User not found');
         }
-        const userID = user[0].ID;
+        const userID = user.ID;
         const DateTime = new Date();
 
-        const scanin = await db.pool.query('INSERT INTO Scans (User, Item, ScanTime) VALUES (?, ?, ?)', [userID, itemID, DateTime]);
-        const itemup = await db.pool.query('UPDATE Items SET CheckStatus=? WHERE ID=?', [!item.CheckStatus, itemID]);
+        const scanin = await scanRepo.create(userID, itemID, DateTime);
+        const itemup = await itemRepo.update(itemID, 'CheckStatus', !item.CheckStatus);
         // Convert checkstatus to boolean and update item
         item.CheckStatus = !item.CheckStatus;
         return res.status(201).json({ Scan: scanin, ItemUpdate: itemup, Item: item });

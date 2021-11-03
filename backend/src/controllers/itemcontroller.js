@@ -1,10 +1,11 @@
-const db = require('../db.js');
+const mariadbRepo = require('../repositories/mariadb.js');
+
+const itemRepo = mariadbRepo.itemRepo();
+const categoryRepo = mariadbRepo.categoryRepo();
 
 exports.get = async (req, res) => {
     try {
-        const result = await db.pool.query(
-            'SELECT i.ID, i.Name, i.Description, i.CheckStatus, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID'
-        );
+        const result = await itemRepo.getAll();
         return res.status(200).json(result);
     } catch (err) {
         console.log(err);
@@ -16,10 +17,7 @@ exports.getID = async (req, res) => {
     const id = req.params.id;
 
     try {
-        const result = await db.pool.query(
-            'SELECT i.ID, i.Name, i.Description, i.CheckStatus, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID WHERE i.ID = ?',
-            [id]
-        );
+        const result = await itemRepo.getByID(id);
         return res.status(200).json(result[0]);
     } catch (err) {
         console.log(err);
@@ -28,7 +26,7 @@ exports.getID = async (req, res) => {
 };
 
 exports.post = async (req, res) => {
-    const catagoryID = req.body.CatagoryID;
+    const categoryID = req.body.CategoryID;
     const name = req.body.Name;
     const description = req.body.Description;
 
@@ -38,13 +36,11 @@ exports.post = async (req, res) => {
             return res.status(400).json('Bad request');
         }
 
-        const category = await db.pool.query('SELECT ID FROM Categories WHERE ID = ?', [catagoryID]);
-        if (category.length === 0) {
+        if (!categoryRepo.exits(categoryID)) {
             return res.status(400).json('Category not found');
         }
 
-        const result = await db.pool.query('INSERT INTO Items (Name, Description, Categories) VALUES (?, ?, ?)', [name, description, catagoryID]);
-
+        const result = await itemRepo.create(name, description, categoryID);
         return res.status(201).json(result);
     } catch (err) {
         console.log(err);

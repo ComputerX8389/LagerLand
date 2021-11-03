@@ -41,7 +41,7 @@ export default {
                 let response = await axios.post('/items', {
                     Name: this.name,
                     Description: this.desc,
-                    CatagoryID: this.selectedGategory.ID,
+                    CategoryID: this.selectedGategory.ID,
                 });
                 console.log('New item', response);
                 this.$emit('created');
