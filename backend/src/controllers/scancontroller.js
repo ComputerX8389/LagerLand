@@ -1,4 +1,3 @@
-const db = require('../db.js');
 const mariadbRepo = require('../repositories/mariadb.js');
 
 const scanRepo = mariadbRepo.scanRepo();
@@ -7,7 +6,7 @@ const itemRepo = mariadbRepo.itemRepo();
 
 exports.get = async (req, res) => {
     try {
-        const result = await scanRepo.getAll(10);
+        const result = await scanRepo.getAll(20);
 
         result.forEach((element) => {
             element.CheckStatus = Boolean(element.CheckStatus);
