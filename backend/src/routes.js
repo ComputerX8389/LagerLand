@@ -10,6 +10,7 @@ module.exports = (app) => {
     router.get('/Items', auth, Itemcontroller.get);
     router.post('/Items', auth, Itemcontroller.post);
     router.get('/Items/:id', auth, Itemcontroller.getID);
+    router.put('/Items/:id', auth, Itemcontroller.put);
 
     // Categories
     router.get('/Categories', auth, Categorycontroller.get);

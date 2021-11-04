@@ -6,7 +6,7 @@ exports.getAll = async () => {
 
 exports.getByID = async (id) => {
     let result = await db.pool.query(
-        'SELECT i.ID, i.Name, i.Description, i.CheckStatus, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID WHERE i.ID = ?',
+        'SELECT i.ID, i.Name, i.Description, i.CheckStatus, c.ID as CategoryID, c.Name as CategoryName FROM Items as i LEFT JOIN Categories as c ON i.Categories = c.ID WHERE i.ID = ?',
         [id]
     );
 
@@ -19,4 +19,10 @@ exports.update = async (itemId, prop, value) => {
 
 exports.create = async (name, description, catagoryID) => {
     return await db.pool.query('INSERT INTO Items (Name, Description, Categories) VALUES (?, ?, ?)', [name, description, catagoryID]);
+};
+
+exports.exits = async (id) => {
+    let result = await db.pool.query('SELECT ID FROM Items WHERE ID = ?', [id]);
+    if (result.length == 0) return false;
+    return true;
 };

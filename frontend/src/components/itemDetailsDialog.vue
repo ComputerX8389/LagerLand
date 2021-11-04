@@ -14,7 +14,7 @@
 import axios from '@/apiClient';
 
 export default {
-    name: 'itemDialog',
+    name: 'itemDetailsDialog',
     props: {
         itemID: {
             type: Number,

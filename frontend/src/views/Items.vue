@@ -14,6 +14,7 @@
                 <Column>
                     <template #body="slotProps">
                         <qrDialog :itemID="slotProps.data.ID" :itemName="slotProps.data.Name" />
+                        <edit :itemID="slotProps.data.ID" @updated="updateItems" />
                     </template>
                 </Column>
             </DataTable>
@@ -27,13 +28,15 @@
 
 <script>
 import axios from '@/apiClient';
-import create from '@/components/createItem.vue';
+import create from '@/components/createItemDialog.vue';
+import edit from '@/components/editItemDialog.vue';
 import qrDialog from '@/components/qrDialog.vue';
 
 export default {
     components: {
         create,
         qrDialog,
+        edit,
     },
     data() {
         return {

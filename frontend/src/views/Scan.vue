@@ -24,7 +24,7 @@
 <script>
 import { QrStream } from 'vue3-qr-reader';
 import axios from '@/apiClient';
-import itemDialog from '@/components/itemDialog.vue';
+import itemDialog from '@/components/itemDetailsDialog.vue';
 
 export default {
     components: {

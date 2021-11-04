@@ -20,7 +20,8 @@
 import axios from '@/apiClient';
 
 export default {
-    name: 'Create',
+    name: 'createItemDialog',
+    emits: ['created'],
     data() {
         return {
             name: '',
