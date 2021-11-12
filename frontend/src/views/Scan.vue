@@ -90,7 +90,6 @@ export default {
     margin: 10px;
 }
 .qrCodeStreamViewer {
-    max-height: 300px;
     position: relative !important;
 }
 </style>

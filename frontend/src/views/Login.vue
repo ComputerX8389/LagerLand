@@ -1,14 +1,17 @@
 <template>
     <div class="p-grid largeMarginTop" v-if="loading == false">
         <div class="p-col-12">
-            <InputText type="text" v-model="username" />
+            <InputText type="text" v-model="username" @click="focus('username')" />
         </div>
         <div class="p-col-12">
-            <InputText type="password" v-model="password" />
+            <InputText type="password" v-model="password" @click="focus('password')" />
         </div>
         <div class="p-col-12">
             <Button label="Login" class="RightMargin" @click="onClick" />
             <Button label="Register" @click="onClick" />
+        </div>
+        <div v-if="scannerDomain" class="keyboard">
+            <keyboard @onChange="onKeyboardChange" ref="keyboard" />
         </div>
     </div>
     <div class="p-grid largeMarginTop" v-else>
@@ -20,19 +23,44 @@
 // Avoid apiClient.js here to avoid redirect for wrong password
 import axios from 'axios';
 import store from '@/store';
+import { defineAsyncComponent } from 'vue';
+
 export default {
     emits: ['setNavbar'],
+    components: {
+        keyboard: defineAsyncComponent(() => import(/* webpackChunkName: "Keyboard" */ '@/components/keyboard')),
+    },
     data() {
         return {
             username: '',
             password: '',
+            selectedTextbox: '',
             loading: false,
+            keyboardInput: '',
+            scannerDomain: false,
         };
     },
     created() {
         this.$emit('setNavbar', false);
+        let subDomian = window.location.hostname.split('.')[0];
+        console.log('subDomian', subDomian);
+        if (subDomian === 'scanner') {
+            this.scannerDomain = true;
+        }
     },
     methods: {
+        focus(textbox) {
+            this.selectedTextbox = textbox;
+            console.log('Selected', textbox);
+            this.$refs.keyboard.setText('');
+        },
+        onKeyboardChange(value) {
+            if (this.selectedTextbox === 'username') {
+                this.username = value;
+            } else if (this.selectedTextbox === 'password') {
+                this.password = value;
+            }
+        },
         async onClick() {
             this.loading = true;
             console.log('username', this.username);
@@ -71,6 +99,11 @@ export default {
 </script>
 
 <style scoped>
+.keyboard {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
 .RightMargin {
     margin-right: 10px !important;
 }
