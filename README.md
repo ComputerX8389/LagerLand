@@ -10,8 +10,9 @@ docker exec -i mariadb_lager sh -c "exec mysql -uroot -pt5gE4zmRsUF9S9YTG11U" < 
 
 ### How to run debug
 
-npm i -g nodemon
-npm run debug
+cd frontend
+
+npm run development
 
 ### Envs
 
