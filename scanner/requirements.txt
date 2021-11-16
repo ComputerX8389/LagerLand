@@ -1,3 +1,0 @@
-kivy[base]
-opencv-python
-picamera[array]

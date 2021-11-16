@@ -1,6 +1,21 @@
 version: '3.1'
 
 services:
+    lagerlandfrontend:
+        container_name: LagerLandFrontend
+        build: ./frontend
+        ports:
+            - 80:80
+
+    lagerlandbackend:
+        container_name: LagerLandBackend
+        build: ./backend
+        environment:
+            DB_HOST: mariadb_lager
+            DB_USER: lagerland
+            DB_PASSWORD: 91gSn2CF83cySuuS5doQ
+            TOKEN_KEY: lagerland # Token key for JWT
+
     mariadb_lager:
         container_name: mariadb_lager
         image: mariadb
@@ -18,7 +33,7 @@ services:
         image: adminer
         container_name: adminer
         ports:
-            - 8000:8080
+            - 8080:8080
         environment:
             - ADMINER_DESIGN=pappu687
 
