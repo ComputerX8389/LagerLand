@@ -1,14 +1,16 @@
 <template>
     <div class="p-grid largeMarginTop" v-if="loading == false">
         <div class="p-col-12">
+            <p>Username</p>
             <InputText type="text" v-model="username" @click="focus('username')" />
         </div>
         <div class="p-col-12">
+            <p>Password</p>
             <InputText type="password" v-model="password" @click="focus('password')" />
         </div>
         <div class="p-col-12">
             <Button label="Login" class="RightMargin" @click="onClick" />
-            <Button label="Register" @click="onClick" />
+            <register />
         </div>
         <div v-if="scannerDomain" class="keyboard">
             <keyboard @onChange="onKeyboardChange" ref="keyboard" />
@@ -24,11 +26,13 @@
 import axios from 'axios';
 import store from '@/store';
 import { defineAsyncComponent } from 'vue';
+import register from '@/components/registerDialog';
 
 export default {
     emits: ['setNavbar'],
     components: {
         keyboard: defineAsyncComponent(() => import(/* webpackChunkName: "Keyboard" */ '@/components/keyboard')),
+        register,
     },
     data() {
         return {
@@ -50,9 +54,11 @@ export default {
     },
     methods: {
         focus(textbox) {
-            this.selectedTextbox = textbox;
-            console.log('Selected', textbox);
-            this.$refs.keyboard.setText('');
+            if (this.scannerDomain) {
+                this.selectedTextbox = textbox;
+                console.log('Selected', textbox);
+                this.$refs.keyboard.setText('');
+            }
         },
         onKeyboardChange(value) {
             if (this.selectedTextbox === 'username') {

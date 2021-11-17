@@ -44,8 +44,8 @@ exports.register = async (req, res) => {
     try {
         if (username && password && fullname && email) {
             let user = await userRepo.getByUsername(username);
-            if (!user) {
-                return res.status(500).json('Username already exists!');
+            if (user !== undefined) {
+                return res.status(409).json('Username already exists!');
             }
 
             let hashedPassword = bcrypt.hashSync(password, 10);
@@ -54,7 +54,7 @@ exports.register = async (req, res) => {
 
             return res.status(201).json('User registered successfully!');
         } else {
-            return res.status(500).json('Please enter Username, Password, FullName and Email');
+            return res.status(406).json('Please enter Username, Password, FullName and Email');
         }
     } catch (error) {
         console.log(error);
