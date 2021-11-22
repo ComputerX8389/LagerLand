@@ -86,9 +86,13 @@ export default {
                 // Set default header for all requests
                 axios.defaults.headers.common['x-access-token'] = user.Token;
 
-                this.$emit('setNavbar', true);
                 this.$toast.add({ severity: 'success', summary: 'Logged in', detail: 'You are logged in as ' + store.get('user')['FullName'], life: 3000 });
-                this.$router.push('Items');
+                if (this.scannerDomain) {
+                    this.$router.push('Scan');
+                } else {
+                    this.$emit('setNavbar', true);
+                    this.$router.push('Items');
+                }
             } catch (error) {
                 console.log(error);
                 if (error.response.status === 401) {
