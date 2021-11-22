@@ -1,5 +1,5 @@
 <template>
-    <div class="p-grid largeMarginTop" v-if="loading == false">
+    <div class="p-grid" :class="{ largeMarginTop: !scannerDomain }" v-if="loading == false">
         <div class="p-col-12">
             <p>Username</p>
             <InputText type="text" v-model="username" @click="focus('username')" />
